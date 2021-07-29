@@ -21,6 +21,11 @@ namespace Microsoft.Graph
 
         public IList<QueryOption> QueryOptions { get; set; }
 
+        public IList<QueryRequest> QueryRequests
+        {
+            get; set;
+        }
+
         /// <summary>
         /// Constructs a new SearchEntityRequestBuilder.
         /// </summary>
