@@ -19,9 +19,9 @@ namespace Microsoft.Graph
     public partial class SearchEntityRequestBuilderFluent : EntityRequestBuilder, ISearchEntityRequestBuilder, BaseActionMethodRequestBuilder<ISearchEntityQueryRequest>
     {
 
-        public IList<QueryOption> QueryOptions { get; set; }
+        public List<QueryOption> QueryOptions { get; set; }
 
-        public IList<QueryRequest> QueryRequests
+        public List<QueryRequest> QueryRequests
         {
             get; set;
         }
@@ -78,6 +78,32 @@ namespace Microsoft.Graph
             return this;
         }
 
+        //var page = await Client.Search
+        //    .QueryRequestBody()
+        //    .With().From().Size()
+        //    .Compile()
+        //    .QueryRequestBody()
+        //    .With().From().Size()
+        //    .Compile() --> optional 
+        //    .Request()
+        //    .PostAsync();
+        public SearchEntityRequestBuilderFluent QueryRequestBody()
+        {
+            if (this.QueryRequests==null)
+            {
+                this.QueryRequests = new List<QueryRequest>();
+            }
+
+            this.QueryOptions = new List<QueryOption>();
+
+            QueryRequest queryRequest = new QueryRequest();
+            queryRequest.QueryOptions = this.QueryOptions;
+
+            this.QueryRequests.Add(queryRequest);
+
+            return this;
+        }
+
         /// <summary>
         /// Gets the request builder for SearchEntityQuery.
         /// </summary>
@@ -112,6 +138,16 @@ namespace Microsoft.Graph
             //  var requests = new List<SearchRequestObject>(){};
             //var page = await Client.Search
             //    .Query(requests)
+            //    .Request()
+            //    .PostAsync();
+
+            //var page = await Client.Search
+            //    .QueryRequestBody()
+            //    .With().From().Size()
+            //    .Compile()
+            //    .QueryRequestBody()
+            //    .With().From().Size()
+            //    .Compile() --> optional 
             //    .Request()
             //    .PostAsync();
 
